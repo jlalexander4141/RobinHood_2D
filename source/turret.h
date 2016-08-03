@@ -1,15 +1,8 @@
-/*
- * turret.h
- *
- *  Created on: Aug 2, 2016
- *      Author: joshuaalexander
- */
+//Joshua Alexander
 
-#ifndef ROBINHOOD_2D_SOURCE_TURRET_H_
-#define ROBINHOOD_2D_SOURCE_TURRET_H_
+#ifndef _turret_h
+#define _turret_h
 
 
 
-
-
-#endif /* ROBINHOOD_2D_SOURCE_TURRET_H_ */
+#endif

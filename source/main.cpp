@@ -31,6 +31,14 @@
 #include <string>
 using namespace std;
 
+#include "game.h"
+#include "player.h"
+#include "pickup.h"
+
+game *game1;
+
+player player1;
+
 //Screen dimension constants
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
@@ -686,107 +694,44 @@ int main(int argc, char* argv[])
 
 #endif
 
-	// GAME LOOP Variable
-	bool inGame = true;
+	//Create the SDL Window
+	game1->createWindow();
 
-	//SDL Event handler
-	SDL_Event event;
-
-	// ******************* Create the SDL Window - START *******************
-		// Start SDL2
-    	SDL_Init(SDL_INIT_EVERYTHING);
-
-    	// Create a SDL Window reference - pointer
-    	SDL_Window *window = nullptr;
-
-    	// Create a SDL RenderTarget - pointer
-    	SDL_Renderer *renderTarget = nullptr;
-
-    	// Create a SDL Surface - pointer
-    	SDL_Surface *surface = nullptr;
-
-    	// Create a SDL Window in the middle of the screen
-    	window = SDL_CreateWindow("Robin Hood 2D",
-                              SDL_WINDOWPOS_CENTERED,
-                              SDL_WINDOWPOS_CENTERED,
-							  SCREEN_WIDTH, SCREEN_HEIGHT,
-                              SDL_WINDOW_SHOWN);
-
-    	//Initialize PNG loading
-		int imgFlags = IMG_INIT_PNG;
-		IMG_Init(imgFlags);
-
-    	// Create an SDL RenderTarget
-    	renderTarget = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-    // ******************* Create the SDL Window - END *******************
+	player1.setup(game1);
 
     	//setup the rooms
-    	roomSetup(renderTarget, surface);
+    	roomSetup(game1->renderTarget, game1->surface);
 
     	//setup the player
-    	playerSetup(renderTarget, surface);
+    	playerSetup(game1->renderTarget, game1->surface);
 
     	//setup the health GUI
-    	healthGUISetup(renderTarget, surface);
+    	healthGUISetup(game1->renderTarget, game1->surface);
 
     	//setup the ammo GUI
-    	ammoGUISetup(renderTarget, surface);
+    	ammoGUISetup(game1->renderTarget, game1->surface);
 
     	//setup the inventory GUI
-    	inventoryGUISetup(renderTarget, surface);
+    	inventoryGUISetup(game1->renderTarget, game1->surface);
 
 		// ******************* Create the health pickup texture - START *******************
 
-		// Load Room BITMAP to a SDL Surface
-		surface = IMG_Load("RobinHood_2D/image/healthPickup.png");
-		// Load Room BITMAP to a SDL Texture
-		SDL_Texture *healthPickupTexture = SDL_CreateTextureFromSurface(renderTarget, surface);
-		// Create a SDL Rectangle for the roomTexture's position and size
-		SDL_Rect healthPickupPos;
-		// Set the x, y, width and height SDL Rectangle values
-		healthPickupPos.x = 100;
-		healthPickupPos.y = 400;
-		healthPickupPos.w = 64;
-		healthPickupPos.h = 64;
-		//Release the SDL surface for later use
-		SDL_FreeSurface(surface);
+		healthPickup healthPickup1;
+		healthPickup1.setup(game1, 100, 400);
 
 		// ******************* Create the health pickup texture - END *******************
 
 		// ******************* Create the ammo pickup texture - START *******************
 
-		// Load Room BITMAP to a SDL Surface
-		surface = IMG_Load("RobinHood_2D/image/ammoPickup.png");
-		// Load Room BITMAP to a SDL Texture
-		SDL_Texture *ammoPickupTexture = SDL_CreateTextureFromSurface(renderTarget, surface);
-		// Create a SDL Rectangle for the roomTexture's position and size
-		SDL_Rect ammoPickupPos;
-		// Set the x, y, width and height SDL Rectangle values
-		ammoPickupPos.x = 200;
-		ammoPickupPos.y = 400;
-		ammoPickupPos.w = 64;
-		ammoPickupPos.h = 64;
-		//Release the SDL surface for later use
-		SDL_FreeSurface(surface);
+		ammoPickup ammoPickup1;
+		ammoPickup1.setup(game1, 200, 400);
 
 		// ******************* Create the ammo pickup texture - END *******************
 
 		// ******************* Create the coin pickup texture - START *******************
 
-		// Load Room BITMAP to a SDL Surface
-		surface = IMG_Load("RobinHood_2D/image/coinPickup.png");
-		// Load Room BITMAP to a SDL Texture
-		SDL_Texture *coinPickupTexture = SDL_CreateTextureFromSurface(renderTarget, surface);
-		// Create a SDL Rectangle for the roomTexture's position and size
-		SDL_Rect coinPickupPos;
-		// Set the x, y, width and height SDL Rectangle values
-		coinPickupPos.x = 300;
-		coinPickupPos.y = 400;
-		coinPickupPos.w = 64;
-		coinPickupPos.h = 64;
-		//Release the SDL surface for later use
-		SDL_FreeSurface(surface);
+		coinPickup coinPickup1;
+		coinPickup1.setup(game1, 300, 400);
 
 		// ******************* Create the coin pickup texture - END *******************
 
