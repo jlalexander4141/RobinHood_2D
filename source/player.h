@@ -9,6 +9,8 @@ class player
 {
 public:
 	//variables
+	SDL_Texture *texture;
+	SDL_Rect pos;
 	const int PLAYER_VEL = 5;
 	int pVelX;
 	int pVelY;
@@ -16,6 +18,11 @@ public:
 	//functions
 	player()
 	{
+		texture = nullptr;
+		pos.x = 200;
+		pos.y = 515;
+		pos.w = 64;
+		pos.h = 128;
 		pVelX = 0;
 		pVelY = 0;
 	}
