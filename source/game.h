@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <ctime>
 using namespace std;
 
 class game
@@ -42,6 +43,7 @@ public:
 	}
 
 	void createWindow();
+	void destroyWindow();
 };
 
 #endif

@@ -21,3 +21,8 @@ void game::createWindow()
 	// Create an SDL RenderTarget
 	renderTarget = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 }
+
+void game::destroyWindow()
+{
+	SDL_DestroyWindow(window);
+}

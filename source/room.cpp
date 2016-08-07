@@ -2,55 +2,55 @@
 
 #include "room.h"
 
-void room::setup(game *game1)
+void room::setup(game game1)
 {
 	// ROOM START
 	// Load Room PNG to a SDL Surface
-	game1->surface = IMG_Load("RobinHood_2D/image/roomStart.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/roomStart.png");
 	// Load Room PNG to a SDL Texture
-	texture[0] = SDL_CreateTextureFromSurface(game1->renderTarget, game1->surface);
-	//Release the SDL game1->surface for later use
-	SDL_FreeSurface(game1->surface);
+	texture[0] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
 
 	// ROOM FIRST
 	// Load Room PNG to a SDL Surface
-	game1->surface = IMG_Load("RobinHood_2D/image/roomStart.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/roomStart.png");
 	// Load Room PNG to a SDL Texture
-	texture[1] = SDL_CreateTextureFromSurface(game1->renderTarget, game1->surface);
-	//Release the SDL game1->surface for later use
-	SDL_FreeSurface(game1->surface);
+	texture[1] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
 
 	//ROOM MID
 	// Load Room PNG to a SDL Surface
-	game1->surface = IMG_Load("RobinHood_2D/image/roomMid.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/roomMid.png");
 	// Load Room PNG to a SDL Texture
-	texture[02] = SDL_CreateTextureFromSurface(game1->renderTarget, game1->surface);
-	//Release the SDL game1->surface for later use
-	SDL_FreeSurface(game1->surface);
+	texture[02] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
 
 	//ROOM LOWER
 	// Load Room PNG to a SDL Surface
-	game1->surface = IMG_Load("RobinHood_2D/image/roomLower.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/roomLower.png");
 	// Load Room PNG to a SDL Texture
-	texture[3] = SDL_CreateTextureFromSurface(game1->renderTarget, game1->surface);
-	//Release the SDL game1->surface for later use
-	SDL_FreeSurface(game1->surface);
+	texture[3] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
 
 	//ROOM UPPER
 	// Load Room PNG to a SDL Surface
-	game1->surface = IMG_Load("RobinHood_2D/image/roomUpper.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/roomUpper.png");
 	// Load Room PNG to a SDL Texture
-	texture[4] = SDL_CreateTextureFromSurface(game1->renderTarget, game1->surface);
-	//Release the SDL game1->surface for later use
-	SDL_FreeSurface(game1->surface);
+	texture[4] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
 }
 
-void room::draw(game *game1, int currentRoom)
+void room::draw(game game1, int currentRoom)
 {
-	SDL_RenderCopy(game1->renderTarget, texture[currentRoom], NULL, &pos);
+	SDL_RenderCopy(game1.renderTarget, texture[currentRoom], NULL, &pos);
 }
 
-void room::walls(game *game1)
+void room::walls(game game1)
 {
 	// DOORS
 	// Set the x, y, width and height SDL Rectangle values

@@ -1,5 +1,8 @@
 //Joshua Alexander
 
+#ifndef _pickup_h
+#define _pickup_h
+
 #include "game.h"
 
 class pickup
@@ -7,44 +10,62 @@ class pickup
 public:
 	//variables
 	SDL_Texture *texture;
-	SDL_Rect pos;
 
 	pickup()
 	{
 		texture = nullptr;
-		pos.x = 0;
-		pos.y = 0;
-		pos.w = 64;
-		pos.h = 64;
 	}
 };
 
 class healthPickup : pickup
 {
 public:
+	SDL_Rect pos;
 
-	healthPickup();
+	healthPickup()
+	{
+		pos.x = 0;
+		pos.y = 0;
+		pos.w = 64;
+		pos.h = 64;
+	}
 
-	void setup(game *game1);
-	void draw(game *game1, int posX, int posY);
+	void setup(game game1);
+	void draw(game game1, int posX, int posY);
 };
 
 class ammoPickup : pickup
 {
 public:
+	SDL_Rect pos;
 
-	ammoPickup();
+	ammoPickup()
+	{
+		pos.x = 0;
+		pos.y = 0;
+		pos.w = 64;
+		pos.h = 64;
+	}
 
-	void setup(game *game1);
-	void draw(game *game1, int posX, int posY);
+	void setup(game game1);
+	void draw(game game1, int posX, int posY);
 };
 
 class coinPickup : pickup
 {
 public:
+	SDL_Rect pos;
 
-	coinPickup();
+	coinPickup()
+	{
+		pos.x = 0;
+		pos.y = 0;
+		pos.w = 64;
+		pos.h = 64;
+	}
 
-	void setup(game *game1);
-	void draw(game *game1, int posX, int posY);
+	void setup(game game1);
+	void draw(game game1, int posX, int posY);
 };
+
+#endif
