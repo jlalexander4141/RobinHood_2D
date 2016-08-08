@@ -38,7 +38,7 @@ const int SCREEN_HEIGHT = 768;
 //current active room
 int CURRENT_ROOM = 0;
 int START = 0;
-int FIRST = 1;
+int FIRST = 5;
 int MID = 2;
 int LOWER = 3;
 int UPPER = 4;
@@ -350,6 +350,48 @@ int main(int argc, char* argv[])
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[0][0]))
 				{
+					CURRENT_ROOM = FIRST;
+					player1.pos.x = 10;
+					player1.pos.y = 515;
+				}
+			}
+
+			//ROOM FIRST
+			if (CURRENT_ROOM == FIRST)
+			{
+				//draw room
+				gameRoom.draw(game1, CURRENT_ROOM);
+
+				//Move the player left or right
+				player1.pos.x += pVelX;
+
+				// Check for wall collisions - left or right
+				if (SDL_HasIntersection(&player1.pos, &gameRoom.wall[1][0]))
+				{
+
+					//Move back
+					player1.pos.x -= pVelX;
+				}
+
+				//Move the player up or down
+				player1.pos.y += pVelY;
+
+				// Check for wall collisions - up or down
+				if (SDL_HasIntersection(&player1.pos, &gameRoom.wall[1][0]))
+				{
+
+					//Move back
+					player1.pos.y -= pVelY;
+				}
+
+				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[1][1]))
+				{
+					CURRENT_ROOM = START;
+					player1.pos.x = 950;
+					player1.pos.y = 515;
+				}
+				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[1][0]))
+				{
 					CURRENT_ROOM = MID;
 					player1.pos.x = 10;
 					player1.pos.y = 515;
@@ -390,7 +432,7 @@ int main(int argc, char* argv[])
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[2][0]))
 				{
-					CURRENT_ROOM = START;
+					CURRENT_ROOM = FIRST;
 					player1.pos.x = 950;
 					player1.pos.y = 515;
 				}

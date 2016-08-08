@@ -12,6 +12,14 @@ void room::setup(game game1)
 	//Release the SDL game1.surface for later use
 	SDL_FreeSurface(game1.surface);
 
+	// ROOM START
+	// Load Room PNG to a SDL Surface
+	game1.surface = IMG_Load("RobinHood_2D/image/roomFirst.png");
+	// Load Room PNG to a SDL Texture
+	texture[5] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
+
 	// ROOM FIRST
 	// Load Room PNG to a SDL Surface
 	game1.surface = IMG_Load("RobinHood_2D/image/roomStart.png");
@@ -60,6 +68,18 @@ void room::walls(game game1)
 	door[0][0].h = 768;
 
 	// Set the x, y, width and height SDL Rectangle values
+	door[1][0].x = 1024;
+	door[1][0].y = 0;
+	door[1][0].w = 1;
+	door[1][0].h = 768;
+
+	// Set the x, y, width and height SDL Rectangle values
+	door[1][1].x = 0;
+	door[1][1].y = 0;
+	door[1][1].w = 1;
+	door[1][1].h = 768;
+
+	// Set the x, y, width and height SDL Rectangle values
 	door[2][0].x = 0;
 	door[2][0].y = 0;
 	door[2][0].w = 1;
@@ -100,6 +120,13 @@ void room::walls(game game1)
 	wall[0][1].y = 650;
 	wall[0][1].w = 1024;
 	wall[0][1].h = 10;
+
+	// ROOM FIRST
+	// Set the x, y, width and height SDL Rectangle values
+	wall[1][0].x = 0;
+	wall[1][0].y = 650;
+	wall[1][0].w = 1024;
+	wall[1][0].h = 10;
 
 	// ROOM MID
 	// Set the x, y, width and height SDL Rectangle values
