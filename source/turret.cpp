@@ -30,7 +30,7 @@ void turret::draw(game game1, int playerPosX)
 	{
 		SDL_RenderCopy(game1.renderTarget, texture1, NULL, &pos);
 	}
-	if (playerPosX < pos.x)
+	else
 	{
 		SDL_RenderCopy(game1.renderTarget, texture2, NULL, &pos);
 	}

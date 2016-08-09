@@ -25,6 +25,8 @@ public:
 	{
 		texture1 = nullptr;
 		texture2 = nullptr;
+		bulletTexture1 = nullptr;
+		bulletTexture2 = nullptr;
 		pos.w = 64;
 		pos.h = 128;
 		bulletPos.x = -200;

@@ -21,6 +21,7 @@
 #include "hud.h"
 #include "room.h"
 #include "turret.h"
+#include "enemy.h"
 
 game game1;
 
@@ -28,12 +29,11 @@ player player1;
 bool playerFaceRight = true;
 bool playerFaceLeft = false;
 bool shot = false;
+bool jumping = false;
+bool canJump = true;
+int jumpCount = 0;
 SDL_Rect pBulletPos;
 SDL_Rect eBulletPos;
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 768;
 
 //current active room
 int CURRENT_ROOM = 0;
@@ -79,10 +79,11 @@ bool keyInput(SDL_Event event, bool inGame)
 			}break;
 
 			case SDLK_UP:
-				pVelY -= PLAYER_VEL;
+				//pVelY -= PLAYER_VEL;
+				jumping = true;
 				break;
 			case SDLK_DOWN:
-				pVelY += PLAYER_VEL;
+				//pVelY += PLAYER_VEL;
 				break;
 			case SDLK_LEFT:
 				pVelX -= PLAYER_VEL;
@@ -96,10 +97,15 @@ bool keyInput(SDL_Event event, bool inGame)
 				break;
 
 			case SDLK_w:
-				pVelY -= PLAYER_VEL;
+				//pVelY -= PLAYER_VEL;
+				if(canJump)
+				{
+					jumping = true;
+					canJump = false;
+				}
 				break;
 			case SDLK_s:
-				pVelY += PLAYER_VEL;
+				//pVelY += PLAYER_VEL;
 				break;
 			case SDLK_a:
 				pVelX -= PLAYER_VEL;
@@ -113,7 +119,10 @@ bool keyInput(SDL_Event event, bool inGame)
 				break;
 
 			case SDLK_SPACE:
-				shot = true;
+				if(player1.ammo > 0)
+				{
+					shot = true;
+				}
 				break;
 
 			}
@@ -125,10 +134,10 @@ bool keyInput(SDL_Event event, bool inGame)
 			{
 
 			case SDLK_UP:
-				pVelY += PLAYER_VEL;
+				//pVelY += PLAYER_VEL;
 				break;
 			case SDLK_DOWN:
-				pVelY -= PLAYER_VEL;
+				//pVelY -= PLAYER_VEL;
 				break;
 			case SDLK_LEFT:
 				pVelX += PLAYER_VEL;
@@ -138,10 +147,10 @@ bool keyInput(SDL_Event event, bool inGame)
 				break;
 
 			case SDLK_w:
-				pVelY += PLAYER_VEL;
+				//pVelY += PLAYER_VEL;
 				break;
 			case SDLK_s:
-				pVelY -= PLAYER_VEL;
+				//pVelY -= PLAYER_VEL;
 				break;
 			case SDLK_a:
 				pVelX += PLAYER_VEL;
@@ -225,6 +234,8 @@ int main(int argc, char* argv[])
 	//create enemies
 	turret turret1;
 	turret1.setup(game1, 800, 515);
+	enemy enemy1;
+	enemy1.setup(game1, 800, 515);
 
 	//set the wall and door locations
 	gameRoom.walls(game1);
@@ -244,6 +255,21 @@ int main(int argc, char* argv[])
 
 			// Clear the SDL RenderTarget
 			SDL_RenderClear(game1.renderTarget);
+
+			if(!jumping)
+			{
+				pVelY += 10;
+			}
+			else
+			{
+				pVelY -= 10;
+				jumpCount += 10;
+				if(jumpCount >= 250)
+				{
+					jumping = false;
+					jumpCount = 0;
+				}
+			}
 
 			if (health >= 10)
 			{
@@ -288,17 +314,40 @@ int main(int argc, char* argv[])
 				//draw coin pickup
 				coinPickup1.draw(game1, 300, 400);
 
-				//draw turret
-				if (turret1.health > 0)
+				//draw enemy
+				if(enemy1.health > 0)
 				{
-					turret1.draw(game1, player1.pos.x);
-					eBulletPos = turret1.shoot(game1);
-					if (SDL_HasIntersection(&turret1.pos, &pBulletPos) && turret1.active == true)
+					enemy1.draw(game1, player1.pos.x);
+					if (SDL_HasIntersection(&enemy1.pos, &pBulletPos) && enemy1.active == true)
 					{
-						turret1.health--;
+						enemy1.health--;
 						player1.resetBullet();
 					}
 				}
+				if (SDL_HasIntersection(&player1.pos, &enemy1.pos) && enemy1.health > 0)
+				{
+					health--;
+					if(player1.pos.x > enemy1.pos.x)
+					{
+						enemy1.pos.x -= 50;
+					}
+					else
+					{
+						enemy1.pos.x += 50;
+					}
+				}
+
+				//draw turret
+//				if (turret1.health > 0)
+//				{
+//					turret1.draw(game1, player1.pos.x);
+//					eBulletPos = turret1.shoot(game1);
+//					if (SDL_HasIntersection(&turret1.pos, &pBulletPos) && turret1.active == true)
+//					{
+//						turret1.health--;
+//						player1.resetBullet();
+//					}
+//				}
 
 				//Move the player left or right
 				player1.pos.x += pVelX;
@@ -306,7 +355,6 @@ int main(int argc, char* argv[])
 				// Check for wall collisions - left or right
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.wall[0][0]) || SDL_HasIntersection(&player1.pos, &gameRoom.wall[0][1]))
 				{
-
 					//Move back
 					player1.pos.x -= pVelX;
 				}
@@ -319,6 +367,7 @@ int main(int argc, char* argv[])
 				{
 					//Move back
 					player1.pos.y -= pVelY;
+					canJump = true;
 				}
 
 				// Check for health pickup collisions
@@ -339,7 +388,7 @@ int main(int argc, char* argv[])
 					coins += 1;
 				}
 
-				//// Check for coin enemyTest collisions
+				//// Check for enemyTest collisions
 				//if (SDL_HasIntersection(&player1.pos, &enemyTestPos)) {
 
 				//	health -= 1;
@@ -353,6 +402,8 @@ int main(int argc, char* argv[])
 					CURRENT_ROOM = FIRST;
 					player1.pos.x = 10;
 					player1.pos.y = 515;
+					jumping = false;
+					jumpCount = 0;
 				}
 			}
 
@@ -382,6 +433,7 @@ int main(int argc, char* argv[])
 
 					//Move back
 					player1.pos.y -= pVelY;
+					canJump = true;
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[1][1]))
@@ -389,12 +441,16 @@ int main(int argc, char* argv[])
 					CURRENT_ROOM = START;
 					player1.pos.x = 950;
 					player1.pos.y = 515;
+					jumping = false;
+					jumpCount = 0;
 				}
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[1][0]))
 				{
 					CURRENT_ROOM = MID;
 					player1.pos.x = 10;
 					player1.pos.y = 515;
+					jumping = false;
+					jumpCount = 0;
 				}
 			}
 
@@ -428,6 +484,7 @@ int main(int argc, char* argv[])
 
 					//Move back
 					player1.pos.y -= pVelY;
+					canJump = true;
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[2][0]))
@@ -435,18 +492,24 @@ int main(int argc, char* argv[])
 					CURRENT_ROOM = FIRST;
 					player1.pos.x = 950;
 					player1.pos.y = 515;
+					jumping = false;
+					jumpCount = 0;
 				}
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[2][1]))
 				{
 					CURRENT_ROOM = LOWER;
 					player1.pos.x = 900;
 					player1.pos.y = 80;
+					jumping = false;
+					jumpCount = 0;
 				}
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[2][2]))
 				{
 					CURRENT_ROOM = UPPER;
 					player1.pos.x = 620;
 					player1.pos.y = 515;
+					jumping = false;
+					jumpCount = 0;
 				}
 			}
 
@@ -480,6 +543,7 @@ int main(int argc, char* argv[])
 
 					//Move back
 					player1.pos.y -= pVelY;
+					canJump = true;
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[3][0]))
@@ -487,6 +551,8 @@ int main(int argc, char* argv[])
 					CURRENT_ROOM = MID;
 					player1.pos.x = 725;
 					player1.pos.y = 515;
+					jumping = false;
+					jumpCount = 0;
 				}
 			}
 
@@ -518,6 +584,7 @@ int main(int argc, char* argv[])
 
 					//Move back
 					player1.pos.y -= pVelY;
+					canJump = true;
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[4][0]))
@@ -525,6 +592,8 @@ int main(int argc, char* argv[])
 					CURRENT_ROOM = MID;
 					player1.pos.x = 475;
 					player1.pos.y = 75;
+					jumping = false;
+					jumpCount = 0;
 				}
 			}
 
@@ -547,6 +616,8 @@ int main(int argc, char* argv[])
 
 			//update inventory GUI
 			coinGUI1.draw(game1, coins);
+
+			pVelY = 0;
 
 			// Draw "Present" the SDL RenderTarget to the user
 			SDL_RenderPresent(game1.renderTarget);
