@@ -4,11 +4,11 @@
 
 void enemy::setup(game game1, int posX, int posY)
 {
-	game1.surface = IMG_Load("RobinHood_2D/image/turret_right.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/enemy_right.png");
 	texture1 = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
 	SDL_FreeSurface(game1.surface);
 
-	game1.surface = IMG_Load("RobinHood_2D/image/turret_left.png");
+	game1.surface = IMG_Load("RobinHood_2D/image/enemy_left.png");
 	texture2 = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
 	SDL_FreeSurface(game1.surface);
 

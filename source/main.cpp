@@ -2,7 +2,9 @@
 
 /////////////////////////////////////////////// INSTRUCTIONS /////////////////////////////////////////////////////
 
-// WASD or arrow keys to move
+// A and D to move
+
+// W to jump
 
 // spacebar to fire
 
@@ -79,11 +81,13 @@ bool keyInput(SDL_Event event, bool inGame)
 			}break;
 
 			case SDLK_UP:
-				//pVelY -= PLAYER_VEL;
-				jumping = true;
+				if(canJump)
+				{
+					jumping = true;
+					canJump = false;
+				}
 				break;
 			case SDLK_DOWN:
-				//pVelY += PLAYER_VEL;
 				break;
 			case SDLK_LEFT:
 				pVelX -= PLAYER_VEL;
@@ -97,7 +101,6 @@ bool keyInput(SDL_Event event, bool inGame)
 				break;
 
 			case SDLK_w:
-				//pVelY -= PLAYER_VEL;
 				if(canJump)
 				{
 					jumping = true;
@@ -105,7 +108,6 @@ bool keyInput(SDL_Event event, bool inGame)
 				}
 				break;
 			case SDLK_s:
-				//pVelY += PLAYER_VEL;
 				break;
 			case SDLK_a:
 				pVelX -= PLAYER_VEL;
