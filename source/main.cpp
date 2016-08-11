@@ -24,6 +24,7 @@
 #include "room.h"
 #include "turret.h"
 #include "enemy.h"
+#include "decor.h"
 
 game game1;
 
@@ -235,9 +236,18 @@ int main(int argc, char* argv[])
 
 	//create enemies
 	turret turret1;
-	turret1.setup(game1, 800, 515);
+	turret1.setup(game1, 800, 525);
 	enemy enemy1;
-	enemy1.setup(game1, 800, 515);
+	enemy1.setup(game1, 800, 525);
+
+	//setup decorations
+	sign sign1;
+	sign1.setup(game1);
+	flower flowerArr[10];
+	for(int i = 0; i < 10; i++)
+	{
+		flowerArr[i].setup(game1);
+	}
 
 	//set the wall and door locations
 	gameRoom.walls(game1);
@@ -326,18 +336,18 @@ int main(int argc, char* argv[])
 						player1.resetBullet();
 					}
 				}
-				if (SDL_HasIntersection(&player1.pos, &enemy1.pos) && enemy1.health > 0)
-				{
-					health--;
-					if(player1.pos.x > enemy1.pos.x)
-					{
-						enemy1.pos.x -= 50;
-					}
-					else
-					{
-						enemy1.pos.x += 50;
-					}
-				}
+//				if (SDL_HasIntersection(&player1.pos, &enemy1.pos) && enemy1.health > 0)
+//				{
+//					health--;
+//					if(player1.pos.x > enemy1.pos.x)
+//					{
+//						enemy1.pos.x -= 50;
+//					}
+//					else
+//					{
+//						enemy1.pos.x += 50;
+//					}
+//				}
 
 				//draw turret
 //				if (turret1.health > 0)
@@ -407,6 +417,12 @@ int main(int argc, char* argv[])
 					jumping = false;
 					jumpCount = 0;
 				}
+
+				//draw decorations
+				sign1.draw(game1, 900, 520);
+				flowerArr[0].draw(game1, 50, 520);
+				flowerArr[1].draw(game1, 300, 520);
+				flowerArr[2].draw(game1, 600, 520);
 			}
 
 			//ROOM FIRST
@@ -454,6 +470,13 @@ int main(int argc, char* argv[])
 					jumping = false;
 					jumpCount = 0;
 				}
+
+				//draw decorations
+				flowerArr[0].draw(game1, 100, 520);
+				flowerArr[1].draw(game1, 300, 520);
+				flowerArr[3].draw(game1, 600, 520);
+				flowerArr[4].draw(game1, 700, 520);
+				flowerArr[5].draw(game1, 900, 520);
 			}
 
 			//ROOM MID
@@ -513,6 +536,11 @@ int main(int argc, char* argv[])
 					jumping = false;
 					jumpCount = 0;
 				}
+
+				//draw decorations
+				flowerArr[0].draw(game1, 150, 520);
+				flowerArr[1].draw(game1, 250, 520);
+				flowerArr[3].draw(game1, 500, 520);
 			}
 
 			// ROOM LOWER
@@ -597,6 +625,13 @@ int main(int argc, char* argv[])
 					jumping = false;
 					jumpCount = 0;
 				}
+
+				//draw decorations
+				flowerArr[0].draw(game1, 80, 520);
+				flowerArr[1].draw(game1, 400, 520);
+				flowerArr[3].draw(game1, 700, 520);
+				flowerArr[4].draw(game1, 850, 520);
+				flowerArr[5].draw(game1, 900, 520);
 			}
 
 			//update player

@@ -28,6 +28,8 @@ public:
 	{
 		texture1 = nullptr;
 		texture2 = nullptr;
+		bulletTexture1 = nullptr;
+		bulletTexture2 = nullptr;
 		pos.x = 200;
 		pos.y = 515;
 		pos.w = 64;

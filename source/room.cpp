@@ -117,14 +117,14 @@ void room::walls(game game1)
 	wall[0][0].h = 768;
 	// Set the x, y, width and height SDL Rectangle values
 	wall[0][1].x = 0;
-	wall[0][1].y = 650;
+	wall[0][1].y = 655;
 	wall[0][1].w = 1024;
 	wall[0][1].h = 10;
 
 	// ROOM FIRST
 	// Set the x, y, width and height SDL Rectangle values
 	wall[1][0].x = 0;
-	wall[1][0].y = 650;
+	wall[1][0].y = 655;
 	wall[1][0].w = 1024;
 	wall[1][0].h = 10;
 
@@ -136,7 +136,7 @@ void room::walls(game game1)
 	wall[2][0].h = 768;
 	// Set the x, y, width and height SDL Rectangle values
 	wall[2][1].x = 0;
-	wall[2][1].y = 650;
+	wall[2][1].y = 655;
 	wall[2][1].w = 845;
 	wall[2][1].h = 10;
 	// Set the x, y, width and height SDL Rectangle values
@@ -173,7 +173,7 @@ void room::walls(game game1)
 	wall[3][1].h = 768;
 	// Set the x, y, width and height SDL Rectangle values
 	wall[3][2].x = 0;
-	wall[3][2].y = 650;
+	wall[3][2].y = 655;
 	wall[3][2].w = 1024;
 	wall[3][2].h = 10;
 	// Set the x, y, width and height SDL Rectangle values
@@ -205,12 +205,12 @@ void room::walls(game game1)
 	wall[4][1].h = 768;
 	// Set the x, y, width and height SDL Rectangle values
 	wall[4][2].x = 0;
-	wall[4][2].y = 650;
+	wall[4][2].y = 655;
 	wall[4][2].w = 470;
 	wall[4][2].h = 10;
 	// Set the x, y, width and height SDL Rectangle values
 	wall[4][3].x = 615;
-	wall[4][3].y = 650;
+	wall[4][3].y = 655;
 	wall[4][3].w = 500;
 	wall[4][3].h = 10;
 }
