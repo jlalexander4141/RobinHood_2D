@@ -51,6 +51,46 @@ void room::setup(game game1)
 	texture[4] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
 	//Release the SDL game1.surface for later use
 	SDL_FreeSurface(game1.surface);
+
+	//MENU TITLE
+	// Load Room PNG to a SDL Surface
+	game1.surface = IMG_Load("RobinHood_2D/image/menu_title.png");
+	// Load Room PNG to a SDL Texture
+	texture[6] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
+
+	//MENU CREDITS
+	// Load Room PNG to a SDL Surface
+	game1.surface = IMG_Load("RobinHood_2D/image/menu_credits.png");
+	// Load Room PNG to a SDL Texture
+	texture[7] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
+
+	//MENU INSTRUCTIONS
+	// Load Room PNG to a SDL Surface
+	game1.surface = IMG_Load("RobinHood_2D/image/menu_instructions.png");
+	// Load Room PNG to a SDL Texture
+	texture[8] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
+
+	//MENU WIN
+	// Load Room PNG to a SDL Surface
+	game1.surface = IMG_Load("RobinHood_2D/image/menu_win.png");
+	// Load Room PNG to a SDL Texture
+	texture[9] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
+
+	//MENU LOSE
+	// Load Room PNG to a SDL Surface
+	game1.surface = IMG_Load("RobinHood_2D/image/menu_lose.png");
+	// Load Room PNG to a SDL Texture
+	texture[10] = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
+	//Release the SDL game1.surface for later use
+	SDL_FreeSurface(game1.surface);
 }
 
 void room::draw(game game1, int currentRoom)

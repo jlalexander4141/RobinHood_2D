@@ -38,6 +38,12 @@ int jumpCount = 0;
 SDL_Rect pBulletPos;
 SDL_Rect eBulletPos;
 
+bool coin1 = false;
+bool coin2 = false;
+bool coin3 = false;
+bool coin4 = false;
+bool coin5 = false;
+
 //current active room
 int CURRENT_ROOM = 0;
 int START = 0;
@@ -45,6 +51,11 @@ int FIRST = 5;
 int MID = 2;
 int LOWER = 3;
 int UPPER = 4;
+int TITLE = -1;
+int CREDITS = -2;
+int INSTRUCTIONS = -3;
+int WIN = -4;
+int LOSE = -5;
 
 //rect variables
 //player
@@ -213,32 +224,30 @@ int main(int argc, char* argv[])
 	coinGUI coinGUI1;
 	coinGUI1.setup(game1);
 
-	// ******************* Create the health pickup texture - START *******************
-
+	//setup the health pickup
 	healthPickup healthPickup1;
 	healthPickup1.setup(game1);
 
-	// ******************* Create the health pickup texture - END *******************
-
-	// ******************* Create the ammo pickup texture - START *******************
-
+	//setup the ammo pickup
 	ammoPickup ammoPickup1;
 	ammoPickup1.setup(game1);
 
-	// ******************* Create the ammo pickup texture - END *******************
-
-	// ******************* Create the coin pickup texture - START *******************
-
-	coinPickup coinPickup1;
+	//setup the coin pickups
+	coinPickup coinPickup1, coinPickup2, coinPickup3, coinPickup4, coinPickup5;
 	coinPickup1.setup(game1);
-
-	// ******************* Create the coin pickup texture - END *******************
+	coinPickup2.setup(game1);
+	coinPickup3.setup(game1);
+	coinPickup4.setup(game1);
+	coinPickup5.setup(game1);
 
 	//create enemies
-	turret turret1;
-	turret1.setup(game1, 800, 525);
-	enemy enemy1;
-	enemy1.setup(game1, 800, 525);
+	turret turret1, turret2;
+	turret1.setup(game1, 750, 525);
+	turret2.setup(game1, 900, 525);
+	enemy enemy1, enemy2, enemy3;
+	enemy1.setup(game1, 700, 525);
+	enemy2.setup(game1, 50, 525);
+	enemy3.setup(game1, 50, 525);
 
 	//setup decorations
 	sign sign1;
@@ -309,6 +318,34 @@ int main(int argc, char* argv[])
 				health--;
 				turret1.resetBullet();
 				eBulletPos = turret1.bulletPos;
+				turret2.resetBullet();
+				eBulletPos = turret2.bulletPos;
+			}
+
+			// MENU TITLE
+			if (CURRENT_ROOM == TITLE)
+			{
+				gameRoom.draw(game1, CURRENT_ROOM);
+			}
+			// MENU CREDITS
+			if (CURRENT_ROOM == CREDITS)
+			{
+				gameRoom.draw(game1, CURRENT_ROOM);
+			}
+			// MENU INSTRUCTIONS
+			if (CURRENT_ROOM == INSTRUCTIONS)
+			{
+				gameRoom.draw(game1, CURRENT_ROOM);
+			}
+			// MENU WIN
+			if (CURRENT_ROOM == WIN)
+			{
+				gameRoom.draw(game1, CURRENT_ROOM);
+			}
+			// MENU LOSE
+			if (CURRENT_ROOM == LOSE)
+			{
+				gameRoom.draw(game1, CURRENT_ROOM);
 			}
 
 			// ROOM START
@@ -316,50 +353,6 @@ int main(int argc, char* argv[])
 			{
 				//draw room
 				gameRoom.draw(game1, CURRENT_ROOM);
-
-				//draw health pickup
-				healthPickup1.draw(game1, 100, 400);
-
-				//draw ammo pickup
-				ammoPickup1.draw(game1, 200, 400);
-
-				//draw coin pickup
-				coinPickup1.draw(game1, 300, 400);
-
-				//draw enemy
-				if(enemy1.health > 0)
-				{
-					enemy1.draw(game1, player1.pos.x);
-					if (SDL_HasIntersection(&enemy1.pos, &pBulletPos) && enemy1.active == true)
-					{
-						enemy1.health--;
-						player1.resetBullet();
-					}
-				}
-//				if (SDL_HasIntersection(&player1.pos, &enemy1.pos) && enemy1.health > 0)
-//				{
-//					health--;
-//					if(player1.pos.x > enemy1.pos.x)
-//					{
-//						enemy1.pos.x -= 50;
-//					}
-//					else
-//					{
-//						enemy1.pos.x += 50;
-//					}
-//				}
-
-				//draw turret
-//				if (turret1.health > 0)
-//				{
-//					turret1.draw(game1, player1.pos.x);
-//					eBulletPos = turret1.shoot(game1);
-//					if (SDL_HasIntersection(&turret1.pos, &pBulletPos) && turret1.active == true)
-//					{
-//						turret1.health--;
-//						player1.resetBullet();
-//					}
-//				}
 
 				//Move the player left or right
 				player1.pos.x += pVelX;
@@ -381,33 +374,6 @@ int main(int argc, char* argv[])
 					player1.pos.y -= pVelY;
 					canJump = true;
 				}
-
-				// Check for health pickup collisions
-				if (SDL_HasIntersection(&player1.pos, &healthPickup1.pos)) 
-				{
-					health = 10;
-				}
-
-				// Check for ammo pickup collisions
-				if (SDL_HasIntersection(&player1.pos, &ammoPickup1.pos)) 
-				{
-					player1.ammo = 20;
-				}
-
-				// Check for coin pickup collisions
-				if (SDL_HasIntersection(&player1.pos, &coinPickup1.pos)) 
-				{
-					coins += 1;
-				}
-
-				//// Check for enemyTest collisions
-				//if (SDL_HasIntersection(&player1.pos, &enemyTestPos)) {
-
-				//	health -= 1;
-				//	player1.pos.x -= pVelX;
-				//	player1.pos.y -= pVelY;
-
-				//}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[0][0]))
 				{
@@ -431,6 +397,12 @@ int main(int argc, char* argv[])
 				//draw room
 				gameRoom.draw(game1, CURRENT_ROOM);
 
+				//draw health pickup
+				healthPickup1.draw(game1, 200, 400);
+
+				//draw ammo pickup
+				ammoPickup1.draw(game1, 400, 400);
+
 				//Move the player left or right
 				player1.pos.x += pVelX;
 
@@ -452,6 +424,52 @@ int main(int argc, char* argv[])
 					//Move back
 					player1.pos.y -= pVelY;
 					canJump = true;
+				}
+
+				//draw enemy
+				if(enemy1.health > 0)
+				{
+					enemy1.draw(game1, player1.pos.x);
+					if (SDL_HasIntersection(&enemy1.pos, &pBulletPos) && enemy1.active == true)
+					{
+						enemy1.health--;
+						player1.resetBullet();
+					}
+				}
+				if (SDL_HasIntersection(&player1.pos, &enemy1.pos) && enemy1.health > 0)
+				{
+					health--;
+					if(player1.pos.x > enemy1.pos.x)
+					{
+						enemy1.pos.x -= 50;
+					}
+					else
+					{
+						enemy1.pos.x += 50;
+					}
+				}
+				if(enemy1.health <= 0 && coin1 == false)
+				{
+					//draw coin pickup
+					coinPickup1.draw(game1, enemy1.pos.x, 550);
+					// Check for coin pickup collisions
+					if (SDL_HasIntersection(&player1.pos, &coinPickup1.pos))
+					{
+						coins += 1;
+						coin1 = true;
+					}
+				}
+
+				// Check for health pickup collisions
+				if (SDL_HasIntersection(&player1.pos, &healthPickup1.pos))
+				{
+					health = 10;
+				}
+
+				// Check for ammo pickup collisions
+				if (SDL_HasIntersection(&player1.pos, &ammoPickup1.pos))
+				{
+					player1.ammo = 20;
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[1][1]))
@@ -510,6 +528,29 @@ int main(int argc, char* argv[])
 					//Move back
 					player1.pos.y -= pVelY;
 					canJump = true;
+				}
+
+				//draw turret
+				if (turret1.health > 0)
+				{
+					turret1.draw(game1, player1.pos.x);
+					eBulletPos = turret1.shoot(game1);
+					if (SDL_HasIntersection(&turret1.pos, &pBulletPos) && turret1.active == true)
+					{
+						turret1.health--;
+						player1.resetBullet();
+					}
+				}
+				if(turret1.health <= 0 && coin2 == false)
+				{
+					//draw coin pickup
+					coinPickup2.draw(game1, turret1.pos.x, 550);
+					// Check for coin pickup collisions
+					if (SDL_HasIntersection(&player1.pos, &coinPickup2.pos))
+					{
+						coins += 1;
+						coin2 = true;
+					}
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[2][0]))
@@ -576,6 +617,40 @@ int main(int argc, char* argv[])
 					canJump = true;
 				}
 
+				//draw enemy
+				if(enemy2.health > 0)
+				{
+					enemy2.draw(game1, player1.pos.x);
+					if (SDL_HasIntersection(&enemy2.pos, &pBulletPos) && enemy2.active == true)
+					{
+						enemy2.health--;
+						player1.resetBullet();
+					}
+				}
+				if (SDL_HasIntersection(&player1.pos, &enemy2.pos) && enemy2.health > 0)
+				{
+					health--;
+					if(player1.pos.x > enemy2.pos.x)
+					{
+						enemy2.pos.x -= 50;
+					}
+					else
+					{
+						enemy2.pos.x += 50;
+					}
+				}
+				if(enemy2.health <= 0 && coin3 == false)
+				{
+					//draw coin pickup
+					coinPickup3.draw(game1, enemy2.pos.x, 550);
+					// Check for coin pickup collisions
+					if (SDL_HasIntersection(&player1.pos, &coinPickup3.pos))
+					{
+						coins += 1;
+						coin3 = true;
+					}
+				}
+
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[3][0]))
 				{
 					CURRENT_ROOM = MID;
@@ -615,6 +690,63 @@ int main(int argc, char* argv[])
 					//Move back
 					player1.pos.y -= pVelY;
 					canJump = true;
+				}
+
+				//draw enemy
+				if(enemy3.health > 0)
+				{
+					enemy3.draw(game1, player1.pos.x);
+					if (SDL_HasIntersection(&enemy3.pos, &pBulletPos) && enemy3.active == true)
+					{
+						enemy3.health--;
+						player1.resetBullet();
+					}
+				}
+				if (SDL_HasIntersection(&player1.pos, &enemy3.pos) && enemy3.health > 0)
+				{
+					health--;
+					if(player1.pos.x > enemy3.pos.x)
+					{
+						enemy3.pos.x -= 50;
+					}
+					else
+					{
+						enemy3.pos.x += 50;
+					}
+				}
+				if(enemy3.health <= 0 && coin4 == false)
+				{
+					//draw coin pickup
+					coinPickup4.draw(game1, enemy3.pos.x, 550);
+					// Check for coin pickup collisions
+					if (SDL_HasIntersection(&player1.pos, &coinPickup4.pos))
+					{
+						coins += 1;
+						coin4 = true;
+					}
+				}
+
+				//draw turret
+				if (turret2.health > 0)
+				{
+					turret2.draw(game1, player1.pos.x);
+					eBulletPos = turret2.shoot(game1);
+					if (SDL_HasIntersection(&turret2.pos, &pBulletPos) && turret2.active == true)
+					{
+						turret2.health--;
+						player1.resetBullet();
+					}
+				}
+				if(turret2.health <= 0 && coin5 == false)
+				{
+					//draw coin pickup
+					coinPickup5.draw(game1, turret2.pos.x, 550);
+					// Check for coin pickup collisions
+					if (SDL_HasIntersection(&player1.pos, &coinPickup5.pos))
+					{
+						coins += 1;
+						coin5 = true;
+					}
 				}
 
 				if (SDL_HasIntersection(&player1.pos, &gameRoom.door[4][0]))

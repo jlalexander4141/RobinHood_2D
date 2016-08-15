@@ -9,7 +9,7 @@ class room
 {
 public:
 	//variables
-	SDL_Texture *texture[6];
+	SDL_Texture *texture[12];
 	SDL_Rect pos;
 	SDL_Rect wall[5][6];
 	SDL_Rect door[5][3];
