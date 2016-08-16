@@ -766,25 +766,28 @@ int main(int argc, char* argv[])
 				flowerArr[5].draw(game1, 900, 520);
 			}
 
-			//update player
-			if (playerFaceRight == true)
+			if (CURRENT_ROOM < 6)
 			{
-				player1.draw_rightFacing(game1, shot);
+				//update player
+				if (playerFaceRight == true)
+				{
+					player1.draw_rightFacing(game1, shot);
+				}
+				if (playerFaceLeft == true)
+				{
+					player1.draw_leftFacing(game1, shot);
+				}
+				pBulletPos = player1.shoot(game1);
+
+				//update health GUI
+				healthGUI1.draw(game1, health);
+
+				//update ammo GUI
+				ammoGUI1.draw(game1, player1.ammo);
+
+				//update inventory GUI
+				coinGUI1.draw(game1, coins);
 			}
-			if (playerFaceLeft == true)
-			{
-				player1.draw_leftFacing(game1, shot);
-			}
-			pBulletPos = player1.shoot(game1);
-
-			//update health GUI
-			healthGUI1.draw(game1, health);
-
-			//update ammo GUI
-			ammoGUI1.draw(game1, player1.ammo);
-
-			//update inventory GUI
-			coinGUI1.draw(game1, coins);
 
 			pVelY = 0;
 
