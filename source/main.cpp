@@ -45,17 +45,17 @@ bool coin4 = false;
 bool coin5 = false;
 
 //current active room
-int CURRENT_ROOM = 0;
+int CURRENT_ROOM = 6;
 int START = 0;
 int FIRST = 5;
 int MID = 2;
 int LOWER = 3;
 int UPPER = 4;
-int TITLE = -1;
-int CREDITS = -2;
-int INSTRUCTIONS = -3;
-int WIN = -4;
-int LOSE = -5;
+int TITLE = 6;
+int CREDITS = 7;
+int INSTRUCTIONS = 8;
+int WIN = 9;
+int LOSE = 10;
 
 //rect variables
 //player
