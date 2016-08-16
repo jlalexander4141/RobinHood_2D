@@ -38,6 +38,9 @@ int jumpCount = 0;
 SDL_Rect pBulletPos;
 SDL_Rect eBulletPos;
 
+bool win = false;
+bool lose = false;
+
 bool coin1 = false;
 bool coin2 = false;
 bool coin3 = false;
@@ -136,6 +139,26 @@ bool keyInput(SDL_Event event, bool inGame)
 				if(player1.ammo > 0)
 				{
 					shot = true;
+				}
+				if(CURRENT_ROOM == TITLE)
+				{
+					CURRENT_ROOM = CREDITS;
+				}
+				else if(CURRENT_ROOM == CREDITS)
+				{
+					CURRENT_ROOM = INSTRUCTIONS;
+				}
+				else if(CURRENT_ROOM == INSTRUCTIONS)
+				{
+					CURRENT_ROOM = START;
+				}
+				else if(CURRENT_ROOM == WIN)
+				{
+					CURRENT_ROOM = TITLE;
+				}
+				else if(CURRENT_ROOM == LOSE)
+				{
+					CURRENT_ROOM = TITLE;
 				}
 				break;
 
@@ -299,6 +322,7 @@ int main(int argc, char* argv[])
 			if (health <= 0)
 			{
 				health = 0;
+				lose = true;
 			}
 			if (player1.ammo >= 20)
 			{
@@ -311,6 +335,46 @@ int main(int argc, char* argv[])
 			if (coins >= 5)
 			{
 				coins = 5;
+				win = true;
+			}
+
+			if(win == true)
+			{
+				CURRENT_ROOM = WIN;
+				enemy1.setup(game1, 700, 525);
+				enemy2.setup(game1, 50, 525);
+				enemy3.setup(game1, 50, 525);
+				turret1.setup(game1, 750, 525);
+				turret2.setup(game1, 900, 525);
+				player1.pos.x = 200;
+				health = 10;
+				player1.ammo = 20;
+				coins = 0;
+				coin1 = false;
+				coin2 = false;
+				coin3 = false;
+				coin4 = false;
+				coin5 = false;
+				win = false;
+			}
+			if(lose == true)
+			{
+				CURRENT_ROOM = LOSE;
+				enemy1.setup(game1, 700, 525);
+				enemy2.setup(game1, 50, 525);
+				enemy3.setup(game1, 50, 525);
+				turret1.setup(game1, 750, 525);
+				turret2.setup(game1, 900, 525);
+				player1.pos.x = 200;
+				health = 10;
+				player1.ammo = 20;
+				coins = 0;
+				coin1 = false;
+				coin2 = false;
+				coin3 = false;
+				coin4 = false;
+				coin5 = false;
+				lose = false;
 			}
 
 			if (SDL_HasIntersection(&player1.pos, &eBulletPos))

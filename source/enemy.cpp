@@ -14,6 +14,9 @@ void enemy::setup(game game1, int posX, int posY)
 
 	pos.x = posX;
 	pos.y = posY;
+
+	health = 5;
+	active = false;
 }
 
 void enemy::draw(game game1, int playerPosX)

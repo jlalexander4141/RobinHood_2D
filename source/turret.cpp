@@ -22,6 +22,10 @@ void turret::setup(game game1, int posX, int posY)
 	game1.surface = IMG_Load("RobinHood_2D/image/bullet_left.png");
 	bulletTexture2 = SDL_CreateTextureFromSurface(game1.renderTarget, game1.surface);
 	SDL_FreeSurface(game1.surface);
+
+	health = 5;
+	active = false;
+	bulletActive = true;
 }
 
 void turret::draw(game game1, int playerPosX)
